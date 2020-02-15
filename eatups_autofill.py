@@ -73,8 +73,7 @@ class eatupsbot():
         sleep(1)
 
         name = bot.driver.find_element_by_xpath('//*[@id="mG61Hd"]/div/div/div[2]/div[2]/div/div[2]/div/div[1]/div/div[1]/input')
-        name.send_keys('***')
-
+        name.send_keys('Kishore Thamilvanan')
 
         month = bot.driver.find_element_by_xpath('//*[@id="mG61Hd"]/div/div/div[2]/div[3]/div/div[2]/div/div[1]/div/div[2]/div[1]/div/div[1]/input')
         day = bot.driver.find_element_by_xpath('//*[@id="mG61Hd"]/div/div/div[2]/div[3]/div/div[2]/div/div[3]/div/div[2]/div[1]/div/div[1]/input')
@@ -91,7 +90,7 @@ class eatupsbot():
         single_res = bot.driver.find_element_by_xpath('//*[@id="mG61Hd"]/div/div/div[2]/div[5]/div/div[2]/div/span/div/div[1]/label/div/div[1]/div/div[3]/div')
         mult_rest = bot.driver.find_element_by_xpath('//*[@id="mG61Hd"]/div/div/div[2]/div[5]/div/div[2]/div/span/div/div[2]/label/div/div[1]/div/div[3]/div')
 
-        if ("," or "and") in resident_names:
+        if ("," in resident_names) or ("and" in resident_names):
             mult_rest.click()
         else:
             single_res.click()
@@ -110,13 +109,20 @@ class eatupsbot():
         another_response.click()
 
     def login(self):
-        self.driver.get('https://forms.gle/cVaqVfVbLXQCRRqKA')
+        self.driver.get('https://docs.google.com/forms/d/e/1FAIpQLSexUiVIA8Z7yxz7pI9wK9bdWvYYIYa1j2Ztv_oYacyzjKnupg/viewform')
 
         sleep(1)
 
+        secfile = pd.read_csv('sec_det.txt')
+        print(secfile)
+        name_t = secfile["name"]
+        netid_t = secfile["netid"]
+        password_t = secfile["password"]
+        email_t = secfile["emailid"]
+
         # gmail login
         gmail_input = self.driver.find_element_by_xpath('//*[@id="identifierId"]')
-        gmail_input.send_keys('***@stonybrook.edu')
+        gmail_input.send_keys(email_t)
 
         gmail_input_button = self.driver.find_element_by_xpath('//*[@id="identifierNext"]')
         gmail_input_button.click()
@@ -131,8 +137,8 @@ class eatupsbot():
         netid_password = bot.driver.find_element_by_xpath('//*[@id="password"]')
         netid_login = bot.driver.find_element_by_xpath('//*[@id="main-form-inputs"]/div[5]/button')
 
-        netid.send_keys('***')
-        netid_password.send_keys('***')
+        netid.send_keys(netid_t)
+        netid_password.send_keys(password_t)
         sleep(2)
         netid_login.click()
 
